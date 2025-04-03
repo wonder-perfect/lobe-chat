@@ -21,13 +21,13 @@ export class I18nManager {
     if (this.initialized) return this.i18n;
 
     // 使用系统语言或默认语言
-    const defaultLanguage = lang || app.getLocale() || 'zh-CN';
+    const defaultLanguage = lang || app.getLocale() || 'en-US';
 
     // console.log(`[I18n] 初始化 i18n, 语言: ${defaultLanguage}`);
 
     await this.i18n.init({
       defaultNS: 'menu',
-      fallbackLng: 'zh-CN',
+      fallbackLng: 'en-US',
       // 按需加载资源
       initAsync: true,
       interpolation: {
