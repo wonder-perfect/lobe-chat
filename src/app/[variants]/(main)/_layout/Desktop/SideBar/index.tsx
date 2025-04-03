@@ -44,7 +44,9 @@ const Nav = memo(() => {
         style={{
           height: '100%',
           zIndex: 100,
-          ...(isDesktop ? { background: 'transparent', paddingBlockStart: 8 } : {}),
+          ...(isDesktop
+            ? { background: 'transparent', borderInlineEnd: 0, paddingBlockStart: 8 }
+            : {}),
         }}
         topActions={
           <Suspense>

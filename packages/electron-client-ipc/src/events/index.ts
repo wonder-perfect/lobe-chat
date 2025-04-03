@@ -1,11 +1,15 @@
 import { DevtoolsDispatchEvents } from './devtools';
 import { FilesSearchDispatchEvents } from './search';
+import { SystemDispatchEvents } from './system';
 
 /**
  * renderer -> main dispatch events
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ClientDispatchEvents extends DevtoolsDispatchEvents, FilesSearchDispatchEvents {}
+export interface ClientDispatchEvents
+  extends DevtoolsDispatchEvents,
+    FilesSearchDispatchEvents,
+    SystemDispatchEvents {}
 
 export type ClientDispatchEventKey = keyof ClientDispatchEvents;
 

@@ -44,7 +44,22 @@ const Layout = memo<PropsWithChildren>(({ children }) => {
         width={'100%'}
       >
         <SideBar />
-        {children}
+        {isDesktop ? (
+          <Flexbox
+            style={{
+              background: theme.colorBgLayout,
+              borderInlineStart: `1px solid ${theme.colorBorderSecondary}`,
+              borderStartStartRadius: 12,
+              borderTop: `1px solid ${theme.colorBorderSecondary}`,
+              overflow: 'hidden',
+            }}
+            width={'100%'}
+          >
+            {children}
+          </Flexbox>
+        ) : (
+          children
+        )}
       </Flexbox>
       <HotkeyHelperPanel />
       <Suspense>

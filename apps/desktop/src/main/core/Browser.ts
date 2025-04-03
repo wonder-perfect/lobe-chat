@@ -123,6 +123,7 @@ export default class Browser {
       height,
       show: false,
       title,
+      transparent: true,
       webPreferences: {
         // 上下文隔离环境
         // https://www.electronjs.org/docs/tutorial/context-isolation
