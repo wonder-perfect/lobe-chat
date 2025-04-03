@@ -66,8 +66,6 @@ const removeDirectories = async () => {
           } catch (error) {
             console.error(`Failed to remove directory ${dirPath}:`, error);
           }
-        } else {
-          console.log(`Directory does not exist: ${dirPath}`);
         }
       }
     }

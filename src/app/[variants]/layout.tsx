@@ -78,7 +78,7 @@ export const generateViewport = async (props: DynamicLayoutProps): ResolvingView
 };
 
 export const generateStaticParams = () => {
-  if (isDesktop) return [{ variants: 'desktop' }];
+  if (isDesktop) return [];
 
   const themes: ThemeAppearance[] = ['dark', 'light'];
   const mobileOptions = [true, false];
