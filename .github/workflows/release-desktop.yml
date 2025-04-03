@@ -86,8 +86,8 @@ jobs:
             branch_name="${{ github.head_ref }}"
             # 清理分支名，移除非法字符
             sanitized_branch=$(echo "${branch_name}" | sed -E 's/[^a-zA-Z0-9_.-]+/-/g')
-            # 创建特殊的 PR 版本号：基础版本号-PR前缀-分支名-提交哈希
-            version="${base_version}-${{ env.PR_TAG_PREFIX }}${sanitized_branch}-$(git rev-parse --short HEAD)"
+            # 创建特殊的 PR 版本号：基础版本号-nightly-PR前缀-分支名-提交哈希
+            version="${base_version}-nightly-${{ env.PR_TAG_PREFIX }}${sanitized_branch}-$(git rev-parse --short HEAD)"
             echo "version=${version}" >> $GITHUB_OUTPUT
             echo "is_pr_build=true" >> $GITHUB_OUTPUT
             echo "📦 Release Version: ${version} (based on base version ${base_version})"
