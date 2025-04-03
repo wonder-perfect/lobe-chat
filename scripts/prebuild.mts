@@ -23,7 +23,7 @@ const partialBuildPages = [
   {
     name: 'mobile',
     disabled: isDesktop,
-    paths: ['src/app/[variants]/(mobile)'],
+    paths: ['src/app/[variants]/(main)/(mobile)'],
   },
   {
     name: 'api-webhooks',

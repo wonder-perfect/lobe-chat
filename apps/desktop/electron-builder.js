@@ -27,7 +27,7 @@ const config = {
     '!dist/next/docs',
     '!dist/next/packages',
     '!dist/next/.next/server/app/sitemap',
-    // '!dist/next/.next/static/media',
+    '!dist/next/.next/static/media',
   ],
   linux: {
     category: 'Utility',
@@ -52,10 +52,7 @@ const config = {
     gatekeeperAssess: false,
     hardenedRuntime: true,
     notarize: true,
-    target: [
-      { arch: ['x64', 'arm64'], target: 'dmg' },
-      { arch: ['x64', 'arm64'], target: 'zip' },
-    ],
+    target: [{ arch: ['x64', 'arm64'], target: 'dmg' }],
   },
   npmRebuild: true,
   nsis: {
