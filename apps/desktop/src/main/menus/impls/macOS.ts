@@ -1,4 +1,4 @@
-import { Menu, MenuItemConstructorOptions, app } from 'electron';
+import { Menu, MenuItemConstructorOptions, app, shell } from 'electron';
 
 import { isDev } from '@/const/env';
 
@@ -11,8 +11,11 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
 
   buildAndSetAppMenu(options?: MenuOptions): Menu {
     const template = this.getAppMenuTemplate(options);
+
     this.appMenu = Menu.buildFromTemplate(template);
+
     Menu.setApplicationMenu(this.appMenu);
+
     return this.appMenu;
   }
 
@@ -114,7 +117,57 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
           { accelerator: 'Command+X', label: t('edit.cut'), role: 'cut' },
           { accelerator: 'Command+C', label: t('edit.copy'), role: 'copy' },
           { accelerator: 'Command+V', label: t('edit.paste'), role: 'paste' },
+          { type: 'separator' },
+          {
+            label: t('edit.speech'),
+            submenu: [
+              { label: t('edit.startSpeaking'), role: 'startSpeaking' },
+              { label: t('edit.stopSpeaking'), role: 'stopSpeaking' },
+            ],
+          },
+          { type: 'separator' },
           { accelerator: 'Command+A', label: t('edit.selectAll'), role: 'selectAll' },
+        ],
+      },
+      {
+        label: t('view.title'),
+        submenu: [
+          { label: t('view.reload'), role: 'reload' },
+          { label: t('view.forceReload'), role: 'forceReload' },
+          { type: 'separator' },
+          { accelerator: 'Command+0', label: t('view.resetZoom'), role: 'resetZoom' },
+          { accelerator: 'Command+Plus', label: t('view.zoomIn'), role: 'zoomIn' },
+          { accelerator: 'Command+-', label: t('view.zoomOut'), role: 'zoomOut' },
+          { type: 'separator' },
+          { accelerator: 'F11', label: t('view.toggleFullscreen'), role: 'togglefullscreen' },
+        ],
+      },
+      {
+        label: t('window.title'),
+        role: 'windowMenu',
+      },
+      {
+        label: t('help.title'),
+        role: 'help',
+        submenu: [
+          {
+            click: async () => {
+              await shell.openExternal('https://lobehub.com');
+            },
+            label: t('help.visitWebsite'),
+          },
+          {
+            click: async () => {
+              await shell.openExternal('https://github.com/lobehub/lobe-chat');
+            },
+            label: t('help.githubRepo'),
+          },
+          {
+            click: async () => {
+              await shell.openExternal('https://github.com/lobehub/lobe-chat/issues/new/choose');
+            },
+            label: t('help.reportIssue'),
+          },
         ],
       },
     ];
@@ -131,7 +184,7 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
             click: () => {
               this.app.browserManager.retrieveByIdentifier('devtools').show();
             },
-            label: t('macOS.devTools'),
+            label: t('dev.devPanel'),
           },
         ],
       });
@@ -147,6 +200,8 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
       { label: t('edit.cut'), role: 'cut' },
       { label: t('edit.copy'), role: 'copy' },
       { label: t('edit.paste'), role: 'paste' },
+      { label: t('edit.selectAll'), role: 'selectAll' },
+      { type: 'separator' },
     ];
   }
 
@@ -155,8 +210,11 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
     const commonT = this.app.i18n.ns('common');
 
     const items: MenuItemConstructorOptions[] = [
+      { label: t('edit.cut'), role: 'cut' },
       { label: t('edit.copy'), role: 'copy' },
-      // ... 其他通用项
+      { label: t('edit.paste'), role: 'paste' },
+      { type: 'separator' },
+      { label: t('edit.selectAll'), role: 'selectAll' },
     ];
 
     if (data?.messageId) {
@@ -185,7 +243,11 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
       { label: t('edit.cut'), role: 'cut' },
       { label: t('edit.copy'), role: 'copy' },
       { label: t('edit.paste'), role: 'paste' },
-      // ...
+      { type: 'separator' },
+      { label: t('edit.undo'), role: 'undo' },
+      { label: t('edit.redo'), role: 'redo' },
+      { type: 'separator' },
+      { label: t('edit.selectAll'), role: 'selectAll' },
     ];
   }
 

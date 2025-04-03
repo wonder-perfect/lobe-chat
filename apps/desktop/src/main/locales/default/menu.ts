@@ -12,6 +12,9 @@ const menu = {
     paste: '粘贴',
     redo: '重做',
     selectAll: '全选',
+    speech: '语音',
+    startSpeaking: '开始朗读',
+    stopSpeaking: '停止朗读',
     title: '编辑',
     undo: '撤销',
   },
@@ -23,6 +26,7 @@ const menu = {
   help: {
     about: '关于',
     githubRepo: 'GitHub 仓库',
+    reportIssue: '报告问题',
     title: '帮助',
     visitWebsite: '访问官网',
   },
@@ -41,6 +45,8 @@ const menu = {
     show: '显示 {{appName}}',
   },
   view: {
+    forceReload: '强制重新加载',
+    reload: '重新加载',
     resetZoom: '重置缩放',
     title: '视图',
     toggleFullscreen: '切换全屏',
@@ -48,9 +54,13 @@ const menu = {
     zoomOut: '缩小',
   },
   window: {
+    bringAllToFront: '前置所有窗口',
     close: '关闭',
+    front: '前置所有窗口',
     minimize: '最小化',
     title: '窗口',
+    toggleFullscreen: '切换全屏',
+    zoom: '缩放',
   },
 };
 

@@ -1,4 +1,4 @@
-import { Menu, MenuItemConstructorOptions, app } from 'electron';
+import { Menu, MenuItemConstructorOptions, app, dialog, shell } from 'electron';
 
 import { isDev } from '@/const/env';
 
@@ -97,14 +97,12 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
         submenu: [
           {
             click: async () => {
-              const { shell } = require('electron');
-              await shell.openExternal('https://lobe.chat');
+              await shell.openExternal('https://lobehub.com');
             },
             label: t('help.visitWebsite'),
           },
           {
             click: async () => {
-              const { shell } = require('electron');
               await shell.openExternal('https://github.com/lobehub/lobe-chat');
             },
             label: t('help.githubRepo'),
@@ -112,7 +110,6 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
           { type: 'separator' },
           {
             click: () => {
-              const { dialog } = require('electron');
               const commonT = this.app.i18n.ns('common');
               const dialogT = this.app.i18n.ns('dialog');
 

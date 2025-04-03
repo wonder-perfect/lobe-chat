@@ -1,4 +1,4 @@
-import { Menu, MenuItemConstructorOptions, app } from 'electron';
+import { Menu, MenuItemConstructorOptions, app, shell } from 'electron';
 
 import { isDev } from '@/const/env';
 
@@ -96,14 +96,12 @@ export class WindowsMenu extends BaseMenuPlatform implements IMenuPlatform {
         submenu: [
           {
             click: async () => {
-              const { shell } = require('electron');
-              await shell.openExternal('https://lobe.chat');
+              await shell.openExternal('https://lobehub.com');
             },
             label: t('help.visitWebsite'),
           },
           {
             click: async () => {
-              const { shell } = require('electron');
               await shell.openExternal('https://github.com/lobehub/lobe-chat');
             },
             label: t('help.githubRepo'),
