@@ -11,6 +11,7 @@ import { createHandler } from '@/utils/next-electron-rsc';
 import BrowserManager from './BrowserManager';
 import { initIPCServer } from './IPCServer';
 import { IoCContainer } from './IoCContainer';
+import MenuManager from './MenuManager';
 
 export type IPCClientEventMap = Map<string, { controller: any; methodName: string }>;
 type Class<T> = new (...args: any[]) => T;
@@ -21,6 +22,7 @@ export class App {
   nextServerUrl = 'http://localhost:3010';
 
   browserManager: BrowserManager;
+  menuManager: MenuManager;
 
   constructor() {
     // load controllers
@@ -51,6 +53,7 @@ export class App {
     });
 
     this.browserManager = new BrowserManager(this);
+    this.menuManager = new MenuManager(this);
 
     // register the schema to interceptor url
     // it should register before app ready
@@ -64,14 +67,13 @@ export class App {
 
     this.initDevBranding();
 
-    //  ==============
     await initIPCServer();
 
-    app.on('ready', async () => {
-      // this.browserManager.showMainWindow();
-    });
+    //  ==============
+    this.menuManager.initialize();
 
     await app.whenReady();
+
     this.browserManager.initializeBrowsers();
 
     app.on('window-all-closed', () => {
@@ -97,11 +99,19 @@ export class App {
    * all controllers in app
    */
   private controllers = new WeakMap();
-  private services = new WeakMap();
   /**
-   * 承接 webview fetch 的事件表
+   * all services in app
+   */
+  private services = new WeakMap();
+
+  /**
+   * webview 层 dispatch 来的事件表
    */
   private ipcClientEventMap: IPCClientEventMap = new Map();
+
+  /**
+   * use in next router interceptor in prod browser render
+   */
   nextInterceptor: (params: { enabled?: boolean; session: Session }) => () => void;
 
   private addController = (ControllerClass: IControlModule) => {

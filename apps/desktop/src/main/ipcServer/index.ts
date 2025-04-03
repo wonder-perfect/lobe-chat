@@ -1,16 +1,16 @@
 import { IpcDispatchEvent } from '@lobechat/electron-server-ipc';
-import { app } from 'electron';
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-const userDataPath = app.getPath('userData');
+import { userDataDir } from '@/const/dir';
 
-const DB_SCHEMA_HASH_PATH = path.join(userDataPath, 'lobehub-local-db-schema-hash');
+const DB_SCHEMA_HASH_PATH = path.join(userDataDir, 'lobehub-local-db-schema-hash');
 
 export const ipcEvent: IpcDispatchEvent = {
   getDatabasePath: async () => {
-    return path.join(userDataPath, 'lobehub-local-db');
+    return path.join(userDataDir, 'lobehub-local-db');
   },
+
   getDatabaseSchemaHash: async () => {
     try {
       return readFileSync(DB_SCHEMA_HASH_PATH, 'utf8');
@@ -20,7 +20,7 @@ export const ipcEvent: IpcDispatchEvent = {
   },
 
   getUserDataPath: async () => {
-    return userDataPath;
+    return userDataDir;
   },
 
   setDatabaseSchemaHash: async (hash: string) => {

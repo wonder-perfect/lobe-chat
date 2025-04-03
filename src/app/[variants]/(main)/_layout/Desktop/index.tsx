@@ -2,6 +2,7 @@
 
 import { useTheme } from 'antd-style';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 import { PropsWithChildren, Suspense, memo } from 'react';
 import { HotkeysProvider } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
@@ -22,8 +23,12 @@ const CloudBanner = dynamic(() => import('@/features/AlertBanner/CloudBanner'));
 const Layout = memo<PropsWithChildren>(({ children }) => {
   const { isPWA } = usePlatform();
   const theme = useTheme();
+
+  const pathname = usePathname();
   const { showCloudPromotion } = useServerConfigStore(featureFlagsSelectors);
 
+  // setting page not show sidebar
+  const hideSideBar = isDesktop && pathname.startsWith('/settings');
   return (
     <HotkeysProvider initiallyActiveScopes={[HotkeyScopeEnum.Global]}>
       {isDesktop && <TitleBar />}
@@ -43,13 +48,13 @@ const Layout = memo<PropsWithChildren>(({ children }) => {
         }}
         width={'100%'}
       >
-        <SideBar />
+        {!hideSideBar && <SideBar />}
         {isDesktop ? (
           <Flexbox
             style={{
               background: theme.colorBgLayout,
               borderInlineStart: `1px solid ${theme.colorBorderSecondary}`,
-              borderStartStartRadius: 12,
+              borderStartStartRadius: !hideSideBar ? 12 : undefined,
               borderTop: `1px solid ${theme.colorBorderSecondary}`,
               overflow: 'hidden',
             }}

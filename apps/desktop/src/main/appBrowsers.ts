@@ -33,7 +33,7 @@ export const appBrowsers = {
     path: '/settings',
     titleBarStyle: 'hidden',
     vibrancy: 'under-window',
-    width: 1200,
+    width: 1000,
   },
 } satisfies Record<string, BrowserWindowOpts>;
 

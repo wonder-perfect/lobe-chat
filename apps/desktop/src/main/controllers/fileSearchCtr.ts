@@ -19,7 +19,7 @@ interface ReadFileResult {
 }
 
 export default class FileSearchCtr extends ControllerModule {
-  get searchService() {
+  private get searchService() {
     return this.app.getService(FileSearchService);
   }
 

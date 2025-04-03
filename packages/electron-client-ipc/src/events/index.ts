@@ -1,4 +1,5 @@
 import { DevtoolsDispatchEvents } from './devtools';
+import { MenuDispatchEvents } from './menu';
 import { FilesSearchDispatchEvents } from './search';
 import { SystemDispatchEvents } from './system';
 
@@ -9,7 +10,8 @@ import { SystemDispatchEvents } from './system';
 export interface ClientDispatchEvents
   extends DevtoolsDispatchEvents,
     FilesSearchDispatchEvents,
-    SystemDispatchEvents {}
+    SystemDispatchEvents,
+    MenuDispatchEvents {}
 
 export type ClientDispatchEventKey = keyof ClientDispatchEvents;
 

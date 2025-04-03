@@ -18,6 +18,12 @@ export default class BrowserManager {
     window.show();
   }
 
+  showSettingsWindow() {
+    const window = this.retrieveByIdentifier('settings');
+
+    window.show();
+  }
+
   /**
    * get Browser by identifier
    */
