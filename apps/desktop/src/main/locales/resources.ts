@@ -23,7 +23,7 @@ export const loadResources = async (lng: string, ns: string) => {
 
       return content;
     } catch (error) {
-      console.error(`无法加载翻译文件: ./default/${ns}`, error);
+      console.error(`[I18n] 无法加载翻译文件: ${ns}`, error);
       return {};
     }
   }
