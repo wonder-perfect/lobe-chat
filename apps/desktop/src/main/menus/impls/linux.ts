@@ -48,78 +48,83 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
 
   private getAppMenuTemplate(options?: MenuOptions): MenuItemConstructorOptions[] {
     const showDev = isDev || options?.showDevItems;
+    const { t } = this.app.i18n;
+
     const template: MenuItemConstructorOptions[] = [
       {
-        label: '文件',
+        label: t('menu.file.title'),
         submenu: [
           {
             click: () => this.app.browserManager.retrieveByIdentifier('settings').show(),
-            label: '首选项',
+            label: t('menu.file.preferences'),
           },
           { type: 'separator' },
-          { label: '退出', role: 'quit' },
+          { label: t('menu.file.quit'), role: 'quit' },
         ],
       },
       {
-        label: '编辑',
+        label: t('menu.edit.title'),
         submenu: [
-          { accelerator: 'Ctrl+Z', label: '撤销', role: 'undo' },
-          { accelerator: 'Ctrl+Shift+Z', label: '重做', role: 'redo' },
+          { accelerator: 'Ctrl+Z', label: t('menu.edit.undo'), role: 'undo' },
+          { accelerator: 'Ctrl+Shift+Z', label: t('menu.edit.redo'), role: 'redo' },
           { type: 'separator' },
-          { accelerator: 'Ctrl+X', label: '剪切', role: 'cut' },
-          { accelerator: 'Ctrl+C', label: '复制', role: 'copy' },
-          { accelerator: 'Ctrl+V', label: '粘贴', role: 'paste' },
+          { accelerator: 'Ctrl+X', label: t('menu.edit.cut'), role: 'cut' },
+          { accelerator: 'Ctrl+C', label: t('menu.edit.copy'), role: 'copy' },
+          { accelerator: 'Ctrl+V', label: t('menu.edit.paste'), role: 'paste' },
           { type: 'separator' },
-          { accelerator: 'Ctrl+A', label: '全选', role: 'selectAll' },
+          { accelerator: 'Ctrl+A', label: t('menu.edit.selectAll'), role: 'selectAll' },
         ],
       },
       {
-        label: '视图',
+        label: t('menu.view.title'),
         submenu: [
-          { accelerator: 'Ctrl+0', label: '重置缩放', role: 'resetZoom' },
-          { accelerator: 'Ctrl+Plus', label: '放大', role: 'zoomIn' },
-          { accelerator: 'Ctrl+-', label: '缩小', role: 'zoomOut' },
+          { accelerator: 'Ctrl+0', label: t('menu.view.resetZoom'), role: 'resetZoom' },
+          { accelerator: 'Ctrl+Plus', label: t('menu.view.zoomIn'), role: 'zoomIn' },
+          { accelerator: 'Ctrl+-', label: t('menu.view.zoomOut'), role: 'zoomOut' },
           { type: 'separator' },
-          { accelerator: 'F11', label: '切换全屏', role: 'togglefullscreen' },
+          { accelerator: 'F11', label: t('menu.view.toggleFullscreen'), role: 'togglefullscreen' },
         ],
       },
       {
-        label: '窗口',
+        label: t('menu.window.title'),
         submenu: [
-          { label: '最小化', role: 'minimize' },
-          { label: '关闭', role: 'close' },
+          { label: t('menu.window.minimize'), role: 'minimize' },
+          { label: t('menu.window.close'), role: 'close' },
         ],
       },
       {
-        label: '帮助',
+        label: t('menu.help.title'),
         submenu: [
           {
             click: async () => {
               const { shell } = require('electron');
               await shell.openExternal('https://lobe.chat');
             },
-            label: '访问官网',
+            label: t('menu.help.visitWebsite'),
           },
           {
             click: async () => {
               const { shell } = require('electron');
               await shell.openExternal('https://github.com/lobehub/lobe-chat');
             },
-            label: 'GitHub 仓库',
+            label: t('menu.help.githubRepo'),
           },
           { type: 'separator' },
           {
             click: () => {
               const { dialog } = require('electron');
               dialog.showMessageBox({
-                buttons: ['确定'],
-                detail: '一个基于大语言模型的聊天应用',
-                message: `${app.getName()} ${app.getVersion()}`,
-                title: `关于 ${app.getName()}`,
+                buttons: [t('common.actions.ok')],
+                detail: t('dialog.about.detail'),
+                message: t('dialog.about.message', {
+                  appName: app.getName(),
+                  appVersion: app.getVersion(),
+                }),
+                title: t('dialog.about.title'),
                 type: 'info',
               });
             },
-            label: '关于',
+            label: t('menu.help.about'),
           },
         ],
       },
@@ -127,17 +132,17 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
 
     if (showDev) {
       template.push({
-        label: '开发',
+        label: t('menu.dev.title'),
         submenu: [
-          { accelerator: 'Ctrl+R', label: '重新加载', role: 'reload' },
-          { accelerator: 'Ctrl+Shift+R', label: '强制重新加载', role: 'forceReload' },
-          { accelerator: 'Ctrl+Shift+I', label: '开发者工具', role: 'toggleDevTools' },
+          { accelerator: 'Ctrl+R', label: t('menu.dev.reload'), role: 'reload' },
+          { accelerator: 'Ctrl+Shift+R', label: t('menu.dev.forceReload'), role: 'forceReload' },
+          { accelerator: 'Ctrl+Shift+I', label: t('menu.dev.devTools'), role: 'toggleDevTools' },
           { type: 'separator' },
           {
             click: () => {
               this.app.browserManager.retrieveByIdentifier('devtools').show();
             },
-            label: '开发者面板',
+            label: t('menu.dev.devPanel'),
           },
         ],
       });
@@ -147,21 +152,25 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
   }
 
   private getDefaultContextMenuTemplate(): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
+
     return [
-      { label: '剪切', role: 'cut' },
-      { label: '复制', role: 'copy' },
-      { label: '粘贴', role: 'paste' },
+      { label: t('menu.edit.cut'), role: 'cut' },
+      { label: t('menu.edit.copy'), role: 'copy' },
+      { label: t('menu.edit.paste'), role: 'paste' },
       { type: 'separator' },
-      { label: '全选', role: 'selectAll' },
+      { label: t('menu.edit.selectAll'), role: 'selectAll' },
     ];
   }
 
   private getChatContextMenuTemplate(data?: any): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
+
     const items: MenuItemConstructorOptions[] = [
-      { label: '复制', role: 'copy' },
-      { label: '粘贴', role: 'paste' },
+      { label: t('menu.edit.copy'), role: 'copy' },
+      { label: t('menu.edit.paste'), role: 'paste' },
       { type: 'separator' },
-      { label: '全选', role: 'selectAll' },
+      { label: t('menu.edit.selectAll'), role: 'selectAll' },
     ];
 
     if (data?.messageId) {
@@ -171,7 +180,7 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
           click: () => {
             console.log('尝试删除消息:', data.messageId);
           },
-          label: '删除消息',
+          label: t('common.actions.delete'),
         },
       );
     }
@@ -181,32 +190,36 @@ export class LinuxMenu extends BaseMenuPlatform implements IMenuPlatform {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getEditorContextMenuTemplate(_data?: any): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
+
     return [
-      { label: '剪切', role: 'cut' },
-      { label: '复制', role: 'copy' },
-      { label: '粘贴', role: 'paste' },
+      { label: t('menu.edit.cut'), role: 'cut' },
+      { label: t('menu.edit.copy'), role: 'copy' },
+      { label: t('menu.edit.paste'), role: 'paste' },
       { type: 'separator' },
-      { label: '撤销', role: 'undo' },
-      { label: '重做', role: 'redo' },
+      { label: t('menu.edit.undo'), role: 'undo' },
+      { label: t('menu.edit.redo'), role: 'redo' },
       { type: 'separator' },
-      { label: '全选', role: 'selectAll' },
+      { label: t('menu.edit.selectAll'), role: 'selectAll' },
     ];
   }
 
   private getTrayMenuTemplate(): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
     const appName = app.getName();
+
     return [
       {
         click: () => this.app.browserManager.showMainWindow(),
-        label: `打开 ${appName}`,
+        label: t('menu.tray.open', { appName }),
       },
       { type: 'separator' },
       {
         click: () => this.app.browserManager.retrieveByIdentifier('settings').show(),
-        label: '首选项',
+        label: t('menu.file.preferences'),
       },
       { type: 'separator' },
-      { label: '退出', role: 'quit' },
+      { label: t('menu.tray.quit'), role: 'quit' },
     ];
   }
 }

@@ -53,57 +53,80 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
   private getAppMenuTemplate(options?: MenuOptions): MenuItemConstructorOptions[] {
     const appName = app.getName();
     const showDev = isDev || options?.showDevItems;
+    const { t } = this.app.i18n;
 
     const template: MenuItemConstructorOptions[] = [
       {
         label: appName,
         submenu: [
-          { label: `关于 ${appName}`, role: 'about' },
+          {
+            label: t('menu.macOS.about', { appName }),
+            role: 'about',
+          },
           { type: 'separator' },
           {
             accelerator: 'Command+,',
             click: () => {
               this.app.browserManager.showSettingsWindow();
             },
-            label: '偏好设置...',
+            label: t('menu.macOS.preferences'),
           },
           { type: 'separator' },
-          { label: '服务', role: 'services', submenu: [] },
+          {
+            label: t('menu.macOS.services'),
+            role: 'services',
+            submenu: [],
+          },
           { type: 'separator' },
-          { accelerator: 'Command+H', label: `隐藏 ${appName}`, role: 'hide' },
-          { accelerator: 'Command+Alt+H', label: '隐藏其他', role: 'hideOthers' },
-          { label: '全部显示', role: 'unhide' },
+          {
+            accelerator: 'Command+H',
+            label: t('menu.macOS.hide', { appName }),
+            role: 'hide',
+          },
+          {
+            accelerator: 'Command+Alt+H',
+            label: t('menu.macOS.hideOthers'),
+            role: 'hideOthers',
+          },
+          {
+            label: t('menu.macOS.unhide'),
+            role: 'unhide',
+          },
           { type: 'separator' },
-          { accelerator: 'Command+Q', label: '退出', role: 'quit' },
+          {
+            accelerator: 'Command+Q',
+            label: t('menu.file.quit'),
+            role: 'quit',
+          },
         ],
       },
       {
-        label: '编辑',
+        label: t('menu.edit.title'),
         submenu: [
-          { accelerator: 'Command+Z', label: '撤销', role: 'undo' },
-          { accelerator: 'Shift+Command+Z', label: '重做', role: 'redo' },
+          { accelerator: 'Command+Z', label: t('menu.edit.undo'), role: 'undo' },
+          { accelerator: 'Shift+Command+Z', label: t('menu.edit.redo'), role: 'redo' },
           { type: 'separator' },
-          { accelerator: 'Command+X', label: '剪切', role: 'cut' },
-          { accelerator: 'Command+C', label: '复制', role: 'copy' },
-          { accelerator: 'Command+V', label: '粘贴', role: 'paste' },
-          { accelerator: 'Command+A', label: '全选', role: 'selectAll' },
+          { accelerator: 'Command+X', label: t('menu.edit.cut'), role: 'cut' },
+          { accelerator: 'Command+C', label: t('menu.edit.copy'), role: 'copy' },
+          { accelerator: 'Command+V', label: t('menu.edit.paste'), role: 'paste' },
+          { accelerator: 'Command+A', label: t('menu.edit.selectAll'), role: 'selectAll' },
         ],
       },
     ];
 
     if (showDev) {
       template.push({
-        label: '开发',
+        label: t('menu.dev.title'),
         submenu: [
-          { accelerator: 'Command+R', label: '重新加载', role: 'reload' },
-          { accelerator: 'Shift+Command+R', label: '强制重新加载', role: 'forceReload' },
-          { accelerator: 'F12', label: '开发者工具', role: 'toggleDevTools' },
+          { accelerator: 'Command+R', label: t('menu.dev.reload'), role: 'reload' },
+          { accelerator: 'Shift+Command+R', label: t('menu.dev.forceReload'), role: 'forceReload' },
+          { accelerator: 'F12', label: t('menu.dev.devTools'), role: 'toggleDevTools' },
           { type: 'separator' },
           {
             click: () => {
               this.app.browserManager.retrieveByIdentifier('devtools').show();
             },
-            label: 'LobeHub 开发者工具',
+            label: t('menu.macOS.devTools'),
           },
         ],
       });
@@ -113,18 +136,23 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
   }
 
   private getDefaultContextMenuTemplate(): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
+
     return [
-      { label: '剪切', role: 'cut' },
-      { label: '复制', role: 'copy' },
-      { label: '粘贴', role: 'paste' },
+      { label: t('menu.edit.cut'), role: 'cut' },
+      { label: t('menu.edit.copy'), role: 'copy' },
+      { label: t('menu.edit.paste'), role: 'paste' },
     ];
   }
 
   private getChatContextMenuTemplate(data?: any): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
+
     const items: MenuItemConstructorOptions[] = [
-      { label: '复制', role: 'copy' },
+      { label: t('menu.edit.copy'), role: 'copy' },
       // ... 其他通用项
     ];
+
     if (data?.messageId) {
       items.push(
         { type: 'separator' },
@@ -135,7 +163,7 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
             // const messageService = this.app.getService(MessageService);
             // messageService?.deleteMessage(data.messageId);
           },
-          label: '删除消息',
+          label: t('common.actions.delete'),
         },
       );
     }
@@ -144,28 +172,32 @@ export class MacOSMenu extends BaseMenuPlatform implements IMenuPlatform {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private getEditorContextMenuTemplate(_data?: any): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
+
     // 编辑器特定的上下文菜单
     return [
-      { label: '剪切', role: 'cut' },
-      { label: '复制', role: 'copy' },
-      { label: '粘贴', role: 'paste' },
+      { label: t('menu.edit.cut'), role: 'cut' },
+      { label: t('menu.edit.copy'), role: 'copy' },
+      { label: t('menu.edit.paste'), role: 'paste' },
       // ...
     ];
   }
 
   private getTrayMenuTemplate(): MenuItemConstructorOptions[] {
+    const { t } = this.app.i18n;
     const appName = app.getName();
+
     return [
       {
         click: () => this.app.browserManager.showMainWindow(),
-        label: `显示 ${appName}`,
+        label: t('menu.tray.show', { appName }),
       },
       {
         click: () => this.app.browserManager.retrieveByIdentifier('settings').show(),
-        label: '设置',
+        label: t('menu.file.preferences'),
       },
       { type: 'separator' },
-      { label: '退出', role: 'quit' },
+      { label: t('menu.tray.quit'), role: 'quit' },
     ];
   }
 }

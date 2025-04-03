@@ -9,6 +9,7 @@ import { IServiceModule } from '@/services';
 import { createHandler } from '@/utils/next-electron-rsc';
 
 import BrowserManager from './BrowserManager';
+import { I18nManager } from './I18nManager';
 import { initIPCServer } from './IPCServer';
 import { IoCContainer } from './IoCContainer';
 import MenuManager from './MenuManager';
@@ -23,6 +24,7 @@ export class App {
 
   browserManager: BrowserManager;
   menuManager: MenuManager;
+  i18n: I18nManager;
 
   constructor() {
     // load controllers
@@ -52,6 +54,7 @@ export class App {
       });
     });
 
+    this.i18n = new I18nManager(this);
     this.browserManager = new BrowserManager(this);
     this.menuManager = new MenuManager(this);
 
@@ -66,6 +69,9 @@ export class App {
     if (!isSingle) app.exit(0);
 
     this.initDevBranding();
+
+    // 初始化 i18n
+    await this.i18n.init();
 
     await initIPCServer();
 
