@@ -157,11 +157,12 @@ jobs:
           DATABASE_URL: 'postgresql://postgres@localhost:5432/postgres'
           # 默认添加一个加密 SECRET
           KEY_VAULTS_SECRET: 'oLXWIiR/AKF+rWaqy9lHkrYgzpATbW3CtJp3UfkVgpE='
-        # 公证部分将来再加回
-        #   CSC_LINK: ./build/developer-id-app-certs.p12
-        #   CSC_KEY_PASSWORD: ${{ secrets.APPLE_APP_CERTS_PASSWORD }}
-        #   APPLE_ID: ${{ secrets.APPLE_ID }}
-        #   APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          # macOS 签名和公证配置
+          CSC_LINK: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
 
       # 非 macOS 平台构建处理
       - name: Build artifact on other platforms

@@ -49,7 +49,9 @@ const config = {
           "Application requests access to the user's Downloads folder.",
       },
     ],
-    notarize: false,
+    gatekeeperAssess: false,
+    hardenedRuntime: true,
+    notarize: true,
     target: [
       { arch: ['x64', 'arm64'], target: 'dmg' },
       { arch: ['x64', 'arm64'], target: 'zip' },
