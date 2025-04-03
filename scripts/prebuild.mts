@@ -1,30 +1,45 @@
+import * as dotenv from 'dotenv';
 import { existsSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import path from 'node:path';
 
 const isDesktop = process.env.NEXT_PUBLIC_IS_DESKTOP_APP === '1';
 
+dotenv.config();
 // 创建需要排除的特性映射
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 const partialBuildPages = [
+  // no need for desktop
   {
     name: 'changelog',
     disabled: isDesktop,
     paths: ['src/app/[variants]/@modal/(.)changelog', 'src/app/[variants]/(main)/changelog'],
   },
   {
-    name: 'desktop-devtools',
+    name: 'auth',
     disabled: isDesktop,
+    paths: ['src/app/[variants]/(auth)'],
+  },
+  {
+    name: 'mobile',
+    disabled: isDesktop,
+    paths: ['src/app/[variants]/(mobile)'],
+  },
+  {
+    name: 'api-webhooks',
+    disabled: isDesktop,
+    paths: ['src/app/(backend)/api/webhooks'],
+  },
+
+  // no need for web
+  {
+    name: 'desktop-devtools',
+    disabled: !isDesktop,
     paths: ['src/app/desktop'],
   },
-  // {
-  //   name: 'auth',
-  //   disabled: isDesktop,
-  //   paths: ['src/app/[variants]/(auth)'],
-  // },
   {
     name: 'desktop-trpc',
-    disabled: isDesktop,
+    disabled: !isDesktop,
     paths: ['src/app/(backend)/trpc/desktop'],
   },
 ];
