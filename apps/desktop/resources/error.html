@@ -111,7 +111,7 @@
           // 更新UI状态
           retryButton.disabled = true;
           retryButton.textContent = 'Retrying...';
-          errorMessage.textContent = 'Attempting to reconnect to the server, please wait...';
+          errorMessage.textContent = 'Attempting to reconnect to the next server, please wait...';
 
           // 调用主进程的重试逻辑
           if (window.electron && window.electron.ipcRenderer) {
