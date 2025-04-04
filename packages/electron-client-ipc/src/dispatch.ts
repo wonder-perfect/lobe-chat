@@ -1,4 +1,4 @@
-import { DispatchInvoke } from '@lobechat/electron-client-ipc';
+import { DispatchInvoke } from './types';
 
 /**
  * client 端请求 sketch 端 event 数据的方法

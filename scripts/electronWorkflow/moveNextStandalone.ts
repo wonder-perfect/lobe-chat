@@ -13,7 +13,8 @@ const targetDir: string = path.join(rootDir, 'apps/desktop/dist/next');
 // 向 sourceDir 写入 .env 文件
 const env = `APP_URL=http://localhost:3010
 KEY_VAULTS_SECRET=oLXWIiR/AKF+rWaqy9lHkrYgzpATbW3CtJp3UfkVgpE=
-DATABASE_URL=postgresql://postgres@localhost:5432/postgres`;
+DATABASE_URL=postgresql://postgres@localhost:5432/postgres
+DEFAULT_AGENT_CONFIG="model=deepseek-v3;provider=ollama"`;
 
 fs.writeFileSync(path.join(sourceDir, '.env'), env, 'utf8');
 console.log(`⚓️ Inject .env successful`);
