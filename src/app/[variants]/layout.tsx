@@ -78,7 +78,16 @@ export const generateViewport = async (props: DynamicLayoutProps): ResolvingView
 };
 
 export const generateStaticParams = () => {
-  if (isDesktop) return [];
+  if (isDesktop)
+    return [
+      {
+        variants: RouteVariants.serializeVariants({
+          isMobile: false,
+          locale: 'en-US',
+          theme: 'light',
+        }),
+      },
+    ];
 
   const themes: ThemeAppearance[] = ['dark', 'light'];
   const mobileOptions = [true, false];
